@@ -26,7 +26,6 @@ h2{font-size:20px;margin:18px 0 10px}
 .filters select{width:auto;flex:1;min-width:140px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
-.img{height:110px;display:flex;align-items:center;justify-content:center;font-size:48px}
 .cb{padding:12px}.cb h3{margin:0 0 4px;font-size:17px}.mut{color:var(--mut);font-size:13px}
 .price{font-size:22px;font-weight:800;color:var(--pri);margin:8px 0}.price small{font-size:13px;font-weight:400;color:var(--mut)}
 .row{display:flex;gap:8px;align-items:center}
@@ -45,6 +44,7 @@ h2{font-size:20px;margin:18px 0 10px}
 .pay input{display:none}.pay input:checked+span{color:var(--pri);font-weight:800}
 .hide{display:none}.ok{color:var(--ok);font-weight:800;font-size:22px}
 .rm{background:none;border:0;color:#c33;font-size:18px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.gal img{width:100%;height:130px;object-fit:cover;border-radius:10px;display:block}
 footer{text-align:center;color:var(--mut);font-size:12px;padding:24px 16px}
 </style>
 </head>
@@ -59,6 +59,8 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:24px 16px}
 <div class="filters"><select id="fe" onchange="renderP()"><option value="">Toutes essences</option><option>Chêne</option><option>Hêtre</option><option>Charme</option><option>Bouleau</option><option>Mélange</option></select>
 <select id="fl" onchange="renderP()"><option value="">Toutes longueurs</option><option>25 cm</option><option>33 cm</option><option>50 cm</option></select></div>
 <div class="grid" id="prods"></div>
+<h2>Notre stock</h2>
+<div class="gal" id="gal"></div>
 </main>
 </section>
 
@@ -107,19 +109,21 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:24px 16px}
 
 <script>
 var P=[
-{id:1,n:"Stère de chêne",e:"Chêne",l:"50 cm",p:88,i:"🌳",d:"Long feu, très calorifique"},
-{id:2,n:"Stère de hêtre",e:"Hêtre",l:"33 cm",p:98,i:"🍂",d:"Flamme régulière, idéal poêle"},
-{id:3,n:"Stère de charme",e:"Charme",l:"50 cm",p:95,i:"🔥",d:"Excellent pouvoir chauffant"},
-{id:4,n:"Stère de bouleau",e:"Bouleau",l:"25 cm",p:85,i:"🪵",d:"Allumage facile, flambée vive"},
-{id:5,n:"Stère mélange feuillus",e:"Mélange",l:"33 cm",p:80,i:"🌲",d:"Bon rapport qualité/prix"},
-{id:6,n:"Stère de chêne bûches courtes",e:"Chêne",l:"25 cm",p:115,i:"🌰",d:"Parfait pour insert et cheminée"}];
+{id:1,n:"Stère de chêne",e:"Chêne",l:"50 cm",p:88,img:"chene-50.jpg",d:"Long feu, très calorifique"},
+{id:2,n:"Stère de hêtre",e:"Hêtre",l:"33 cm",p:98,img:"hetre-33.jpg",d:"Flamme régulière, idéal poêle"},
+{id:3,n:"Stère de charme",e:"Charme",l:"50 cm",p:95,img:"charme-50.jpg",d:"Excellent pouvoir chauffant"},
+{id:4,n:"Stère de bouleau",e:"Bouleau",l:"25 cm",p:85,img:"bouleau-25.jpg",d:"Allumage facile, flambée vive"},
+{id:5,n:"Stère mélange feuillus",e:"Mélange",l:"33 cm",p:80,img:"melange-33.jpg",d:"Bon rapport qualité/prix"},
+{id:6,n:"Stère de chêne bûches courtes",e:"Chêne",l:"25 cm",p:115,img:"chene-25.jpg",d:"Parfait pour insert et cheminée"},
+{id:7,n:"Stère de chêne sur palette",e:"Chêne",l:"33 cm",p:135,img:"palette.jpg",d:"Livré sur palette, facile à stocker"}];
+var G=["stock-1.jpg","stock-2.jpg","stock-3.jpg","stock-4.jpg","stock-5.jpg","stock-6.jpg"];
 var C={FR:["France",45],BE:["Belgique",60],LU:["Luxembourg",60],NL:["Pays-Bas",65],DE:["Allemagne",70],IT:["Italie",80],ES:["Espagne",90],AT:["Autriche",95],PT:["Portugal",110],CH:["Suisse",110],PL:["Pologne",100],CZ:["Tchéquie",100],SK:["Slovaquie",110],SI:["Slovénie",110],HU:["Hongrie",115],HR:["Croatie",120],DK:["Danemark",120],RO:["Roumanie",130],BG:["Bulgarie",140],GB:["Royaume-Uni",140],SE:["Suède",140],LT:["Lituanie",140],IE:["Irlande",150],GR:["Grèce",150],LV:["Lettonie",150],EE:["Estonie",150],FI:["Finlande",160],NO:["Norvège",160],MT:["Malte",200],CY:["Chypre",220]};
 var cart={};
 function $(i){return document.getElementById(i)}
 function eur(x){return x.toFixed(2).replace(".",",")+" €"}
 function renderP(){var e=$("fe").value,l=$("fl").value,h="";
 P.filter(function(x){return(!e||x.e==e)&&(!l||x.l==l)}).forEach(function(x){
-h+='<div class="card"><div class="img" style="background:var(--bd)">'+x.i+'</div><div class="cb"><h3>'+x.n+'</h3><div class="mut">'+x.d+' · bûches '+x.l+'</div><div class="price">'+eur(x.p)+' <small>/ stère</small></div><div class="row"><input type="number" min="1" value="1" id="q'+x.id+'"><button class="btn" onclick="add('+x.id+')">Ajouter</button></div></div></div>'});
+h+='<div class="card"><img src="images/'+x.img+'" alt="'+x.n+'" loading="lazy" style="width:100%;height:170px;object-fit:cover;display:block"><div class="cb"><h3>'+x.n+'</h3><div class="mut">'+x.d+' · bûches '+x.l+'</div><div class="price">'+eur(x.p)+' <small>/ stère</small></div><div class="row"><input type="number" min="1" value="1" id="q'+x.id+'"><button class="btn" onclick="add('+x.id+')">Ajouter</button></div></div></div>'});
 $("prods").innerHTML=h||'<p class="mut">Aucun produit pour ce filtre.</p>'}
 function add(id){var q=parseInt($("q"+id).value)||1;cart[id]=(cart[id]||0)+q;upd();$("q"+id).value=1;show("cart")}
 function upd(){var n=0;for(var k in cart)n+=cart[k];$("cnt").textContent=n}
@@ -153,6 +157,7 @@ var b=document.querySelector("#v3 .btn:not(.sec)");b.disabled=true;b.textContent
 fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body}).then(function(r){if(!r.ok)throw 0;
 $("conf").innerHTML="Merci "+f.client+" !<br>Commande <b>"+no+"</b> · Total <b>"+f.total+"</b><br>Livraison à : "+f.adresse+", "+f.pays+"<br>Les instructions de paiement vous seront envoyées à "+f.email+".";cart={};upd();go(4);b.disabled=false;b.textContent="Confirmer la commande"}).catch(function(){b.disabled=false;b.textContent="Confirmer la commande";alert("La commande n’a pas pu être envoyée. Vérifiez votre connexion et réessayez.")})}
 (function(){var s=$("co"),h="";for(var k in C)h+='<option value="'+k+'">'+C[k][0]+'</option>';s.innerHTML=h})();
+$("gal").innerHTML=G.map(function(g){return '<img src="images/'+g+'" alt="Stock de bois de chauffage" loading="lazy">'}).join("");
 renderP();pm();
 </script>
 </body>
