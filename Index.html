@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EuroStere – Bois de chauffage livré chez vous en Europe</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#faf6f0;--card:#fff;--tx:#2a1d12;--mut:#7a6a5a;--pri:#b4541a;--pri2:#8f4013;--bd:#e6dccd;--ok:#2f7d4a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1410;--card:#262019;--tx:#f3ebe0;--mut:#b3a590;--pri:#e0803f;--pri2:#c96a2c;--bd:#3a3128;--ok:#5fc283}}
+:root[data-theme="dark"]{--bg:#1a1410;--card:#262019;--tx:#f3ebe0;--mut:#b3a590;--pri:#e0803f;--pri2:#c96a2c;--bd:#3a3128;--ok:#5fc283}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--card);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:12px 16px;z-index:5}
+.logo{font-weight:800;font-size:19px;color:var(--pri)}
+.cartbtn{background:var(--pri);color:#fff;border:0;border-radius:20px;padding:8px 14px;font-weight:700;font-size:14px}
+.hero{padding:28px 16px;text-align:center;background:linear-gradient(135deg,#8f4013,#d9873f);color:#fff}
+.hero h1{margin:0 0 8px;font-size:26px}.hero p{margin:0 auto;max-width:520px;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;font-size:13px}
+.badges span{background:rgba(255,255,255,.2);padding:5px 10px;border-radius:14px}
+main{max-width:980px;margin:0 auto;padding:16px}
+h2{font-size:20px;margin:18px 0 10px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filters select,input,select{font:inherit;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);width:100%}
+.filters select{width:auto;flex:1;min-width:140px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.img{height:110px;display:flex;align-items:center;justify-content:center;font-size:48px}
+.cb{padding:12px}.cb h3{margin:0 0 4px;font-size:17px}.mut{color:var(--mut);font-size:13px}
+.price{font-size:22px;font-weight:800;color:var(--pri);margin:8px 0}.price small{font-size:13px;font-weight:400;color:var(--mut)}
+.row{display:flex;gap:8px;align-items:center}
+.row input{width:80px}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:8px;padding:11px 14px;font-weight:700;font-size:15px;width:100%;cursor:pointer}
+.btn:hover{background:var(--pri2)}.btn.sec{background:transparent;color:var(--pri);border:1px solid var(--pri)}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.panel label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.line{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px dashed var(--bd);font-size:14px}
+.tot{font-weight:800;font-size:18px;border:0}
+.steps{display:flex;gap:6px;margin-bottom:12px;font-size:12px}
+.steps div{flex:1;text-align:center;padding:6px;border-radius:8px;background:var(--bd);color:var(--mut)}
+.steps .on{background:var(--pri);color:#fff;font-weight:700}
+.pay{display:flex;gap:8px;flex-wrap:wrap}.pay label{flex:1;min-width:110px;border:1px solid var(--bd);border-radius:8px;padding:10px;text-align:center;margin:0;color:var(--tx);cursor:pointer}
+.pay input{display:none}.pay input:checked+span{color:var(--pri);font-weight:800}
+.hide{display:none}.ok{color:var(--ok);font-weight:800;font-size:22px}
+.rm{background:none;border:0;color:#c33;font-size:18px}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:24px 16px}
+</style>
+</head>
+<body>
+<header><div class="logo">🪵 EuroStere</div><button class="cartbtn" onclick="show('cart')">Panier (<span id="cnt">0</span>)</button></header>
+
+<section id="shop">
+<div class="hero"><h1>Le stère de bois livré partout en Europe</h1><p>Bois de chauffage sec, en gros ou en petite quantité. Commandez en ligne, payez en sécurité, on livre à votre porte.</p>
+<div class="badges"><span>🚚 Expédié depuis la France, livré chez vous</span><span>🔥 Bois sec</span><span>🌍 Toute l’Europe</span><span>🔒 Paiement sécurisé</span></div></div>
+<main>
+<h2>Nos stères</h2>
+<div class="filters"><select id="fe" onchange="renderP()"><option value="">Toutes essences</option><option>Chêne</option><option>Hêtre</option><option>Charme</option><option>Bouleau</option><option>Mélange</option></select>
+<select id="fl" onchange="renderP()"><option value="">Toutes longueurs</option><option>25 cm</option><option>33 cm</option><option>50 cm</option></select></div>
+<div class="grid" id="prods"></div>
+</main>
+</section>
+
+<section id="cart" class="hide"><main>
+<div class="steps"><div class="on" id="s1">1. Panier</div><div id="s2">2. Livraison</div><div id="s3">3. Paiement</div></div>
+
+<div id="v1">
+<h2>Votre panier</h2><div class="panel" id="cartlist"></div>
+<button class="btn sec" onclick="show('shop')" style="margin-bottom:8px">← Continuer mes achats</button>
+<button class="btn" onclick="go(2)">Passer à la livraison</button>
+</div>
+
+<div id="v2" class="hide">
+<h2>Adresse de livraison</h2>
+<div class="panel">
+<div class="two"><div><label>Prénom</label><input id="fn"></div><div><label>Nom</label><input id="ln"></div></div>
+<label>E-mail</label><input id="em" type="email"><label>Téléphone</label><input id="ph" type="tel">
+<label>Pays</label><select id="co" onchange="renderT()"></select>
+<label>Adresse (rue, numéro)</label><input id="ad">
+<div class="two"><div><label>Code postal</label><input id="zp"></div><div><label>Ville</label><input id="ci"></div></div>
+<label>Instructions pour le livreur (facultatif)</label><input id="nt" placeholder="Accès camion, point de dépôt…">
+</div>
+<button class="btn sec" onclick="go(1)" style="margin-bottom:8px">← Retour</button>
+<button class="btn" onclick="go(3)">Continuer vers le paiement</button>
+</div>
+
+<div id="v3" class="hide">
+<h2>Paiement</h2>
+<div class="panel"><div class="pay">
+<label><input type="radio" name="pm" value="card" checked onchange="pm()"><span>💳 Carte</span></label>
+<label><input type="radio" name="pm" value="vir" onchange="pm()"><span>🏦 Virement</span></label>
+<label><input type="radio" name="pm" value="pp" onchange="pm()"><span>🅿️ PayPal</span></label></div>
+<p id="pother" class="mut"></p></div>
+<div class="panel"><h3 style="margin:0 0 6px">Récapitulatif</h3><div id="recap"></div></div>
+<button class="btn sec" onclick="go(2)" style="margin-bottom:8px">← Retour</button>
+<button class="btn" onclick="pay()">Confirmer la commande</button>
+</div>
+
+<div id="v4" class="hide"><div class="panel" style="text-align:center">
+<div class="ok">✔ Commande confirmée</div><p id="conf"></p>
+<button class="btn" onclick="show('shop')">Retour à la boutique</button></div></div>
+</main></section>
+
+<form name="orders" method="POST" data-netlify="true" netlify-honeypot="bot" hidden><input name="bot"><input name="numero"><input name="client"><input name="email"><input name="telephone"><input name="adresse"><input name="pays"><input name="instructions"><input name="articles"><input name="total"><input name="paiement"></form>
+<footer>© EuroStere – Vente de stères de bois de chauffage · Expédié depuis la France · Livraison en Europe</footer>
+
+<script>
+var P=[
+{id:1,n:"Stère de chêne",e:"Chêne",l:"50 cm",p:88,i:"🌳",d:"Long feu, très calorifique"},
+{id:2,n:"Stère de hêtre",e:"Hêtre",l:"33 cm",p:98,i:"🍂",d:"Flamme régulière, idéal poêle"},
+{id:3,n:"Stère de charme",e:"Charme",l:"50 cm",p:95,i:"🔥",d:"Excellent pouvoir chauffant"},
+{id:4,n:"Stère de bouleau",e:"Bouleau",l:"25 cm",p:85,i:"🪵",d:"Allumage facile, flambée vive"},
+{id:5,n:"Stère mélange feuillus",e:"Mélange",l:"33 cm",p:80,i:"🌲",d:"Bon rapport qualité/prix"},
+{id:6,n:"Stère de chêne bûches courtes",e:"Chêne",l:"25 cm",p:115,i:"🌰",d:"Parfait pour insert et cheminée"}];
+var C={FR:["France",45],BE:["Belgique",60],LU:["Luxembourg",60],NL:["Pays-Bas",65],DE:["Allemagne",70],IT:["Italie",80],ES:["Espagne",90],AT:["Autriche",95],PT:["Portugal",110],CH:["Suisse",110],PL:["Pologne",100],CZ:["Tchéquie",100],SK:["Slovaquie",110],SI:["Slovénie",110],HU:["Hongrie",115],HR:["Croatie",120],DK:["Danemark",120],RO:["Roumanie",130],BG:["Bulgarie",140],GB:["Royaume-Uni",140],SE:["Suède",140],LT:["Lituanie",140],IE:["Irlande",150],GR:["Grèce",150],LV:["Lettonie",150],EE:["Estonie",150],FI:["Finlande",160],NO:["Norvège",160],MT:["Malte",200],CY:["Chypre",220]};
+var cart={};
+function $(i){return document.getElementById(i)}
+function eur(x){return x.toFixed(2).replace(".",",")+" €"}
+function renderP(){var e=$("fe").value,l=$("fl").value,h="";
+P.filter(function(x){return(!e||x.e==e)&&(!l||x.l==l)}).forEach(function(x){
+h+='<div class="card"><div class="img" style="background:var(--bd)">'+x.i+'</div><div class="cb"><h3>'+x.n+'</h3><div class="mut">'+x.d+' · bûches '+x.l+'</div><div class="price">'+eur(x.p)+' <small>/ stère</small></div><div class="row"><input type="number" min="1" value="1" id="q'+x.id+'"><button class="btn" onclick="add('+x.id+')">Ajouter</button></div></div></div>'});
+$("prods").innerHTML=h||'<p class="mut">Aucun produit pour ce filtre.</p>'}
+function add(id){var q=parseInt($("q"+id).value)||1;cart[id]=(cart[id]||0)+q;upd();$("q"+id).value=1;show("cart")}
+function upd(){var n=0;for(var k in cart)n+=cart[k];$("cnt").textContent=n}
+function sub(){var s=0;for(var k in cart){s+=P.filter(function(x){return x.id==k})[0].p*cart[k]}return s}
+function qty(){var n=0;for(var k in cart)n+=cart[k];return n}
+function ship(){var c=$("co").value;return qty()?C[c][1]+Math.max(0,qty()-1)*8:0}
+function renderT(){}
+function renderCart(){var h="",k;for(k in cart){var x=P.filter(function(y){return y.id==k})[0];
+h+='<div class="line"><span>'+x.n+' × '+cart[k]+'</span><span>'+eur(x.p*cart[k])+' <button class="rm" onclick="del('+k+')">×</button></span></div>'}
+if(!h){$("cartlist").innerHTML='<p class="mut">Votre panier est vide.</p>';return}
+h+='<div class="line tot"><span>Sous-total</span><span>'+eur(sub())+'</span></div><p class="mut">Frais de livraison calculés selon votre pays à l’étape suivante.</p>';
+$("cartlist").innerHTML=h}
+function del(k){delete cart[k];upd();renderCart()}
+function show(s){$("shop").classList.toggle("hide",s!="shop");$("cart").classList.toggle("hide",s!="cart");
+if(s=="cart"){go(1)}window.scrollTo(0,0)}
+function go(n){if(n>1&&!qty()){alert("Votre panier est vide.");return}
+if(n==3){var r=["fn","ln","em","ph","ad","zp","ci"];for(var i=0;i<r.length;i++){if(!$(r[i]).value.trim()){alert("Merci de remplir tous les champs d’adresse.");return}}
+if($("em").value.indexOf("@")<1){alert("E-mail invalide.");return}recap()}
+for(var j=1;j<=4;j++){$("v"+j).classList.toggle("hide",j!=n)}
+for(var j=1;j<=3;j++){$("s"+j).classList.toggle("on",j<=Math.min(n,3))}
+if(n==1)renderCart();window.scrollTo(0,0)}
+function recap(){var c=$("co").value,s=sub(),f=ship();
+$("recap").innerHTML='<div class="line"><span>Marchandise ('+qty()+' stère'+(qty()>1?'s':'')+')</span><span>'+eur(s)+'</span></div><div class="line"><span>Livraison '+C[c][0]+'</span><span>'+eur(f)+'</span></div><div class="line tot"><span>Total TTC</span><span>'+eur(s+f)+'</span></div><p class="mut">Livraison à : '+$("ad").value+', '+$("zp").value+' '+$("ci").value+', '+C[c][0]+'</p>'}
+function pm(){var v=document.querySelector('input[name=pm]:checked').value;
+$("pother").textContent=v=="card"?"Un lien de paiement sécurisé par carte vous sera envoyé par e-mail après validation de la commande.":v=="vir"?"Les coordonnées bancaires vous seront envoyées par e-mail. La commande est expédiée dès réception du virement.":"Un lien de paiement PayPal vous sera envoyé par e-mail après validation de la commande."}
+function pay(){var no="SP-"+Date.now().toString().slice(-7),c=$("co").value,t=sub()+ship(),k,l=[];
+for(k in cart){var x=P.filter(function(y){return y.id==k})[0];l.push(cart[k]+" x "+x.n+" ("+x.l+") = "+eur(x.p*cart[k]))}
+var f={"form-name":"orders",numero:no,client:$("fn").value+" "+$("ln").value,email:$("em").value,telephone:$("ph").value,adresse:$("ad").value+", "+$("zp").value+" "+$("ci").value,pays:C[c][0],instructions:$("nt").value,articles:l.join(" | "),total:eur(t),paiement:{card:"Carte",vir:"Virement",pp:"PayPal"}[document.querySelector('input[name=pm]:checked').value]};
+var body=Object.keys(f).map(function(q){return encodeURIComponent(q)+"="+encodeURIComponent(f[q])}).join("&");
+var b=document.querySelector("#v3 .btn:not(.sec)");b.disabled=true;b.textContent="Envoi…";
+fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body}).then(function(r){if(!r.ok)throw 0;
+$("conf").innerHTML="Merci "+f.client+" !<br>Commande <b>"+no+"</b> · Total <b>"+f.total+"</b><br>Livraison à : "+f.adresse+", "+f.pays+"<br>Les instructions de paiement vous seront envoyées à "+f.email+".";cart={};upd();go(4);b.disabled=false;b.textContent="Confirmer la commande"}).catch(function(){b.disabled=false;b.textContent="Confirmer la commande";alert("La commande n’a pas pu être envoyée. Vérifiez votre connexion et réessayez.")})}
+(function(){var s=$("co"),h="";for(var k in C)h+='<option value="'+k+'">'+C[k][0]+'</option>';s.innerHTML=h})();
+renderP();pm();
+</script>
+</body>
+</html>
