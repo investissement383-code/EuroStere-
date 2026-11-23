@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>EuroStere – Bois de chauffage livré chez vous en Europe</title>
+<title>EuroStere</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#faf6f0;--card:#fff;--tx:#2a1d12;--mut:#7a6a5a;--pri:#b4541a;--pri2:#8f4013;--bd:#e6dccd;--ok:#2f7d4a}
@@ -46,119 +46,136 @@ h2{font-size:20px;margin:18px 0 10px}
 .rm{background:none;border:0;color:#c33;font-size:18px}
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.gal img{width:100%;height:130px;object-fit:cover;border-radius:10px;display:block}
 footer{text-align:center;color:var(--mut);font-size:12px;padding:24px 16px}
+.lgs{width:auto;padding:6px;margin:0 8px 0 auto}.hd{display:flex;align-items:center}
+details{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-bottom:8px}summary{font-weight:700;cursor:pointer}details p{margin:8px 0 0;color:var(--mut)}
+#wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;text-decoration:none;z-index:9;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+footer a{color:var(--pri)}
 </style>
 </head>
 <body>
-<header><div class="logo">🪵 EuroStere</div><button class="cartbtn" onclick="show('cart')">Panier (<span id="cnt">0</span>)</button></header>
-
+<header><div class="logo">🪵 EuroStere</div><div class="hd"><select id="lg" class="lgs" onchange="sl(this.value)"><option value="fr">Français</option><option value="en">English</option><option value="de">Deutsch</option><option value="it">Italiano</option><option value="es">Español</option><option value="nl">Nederlands</option></select><button class="cartbtn" onclick="show('cart')"><span data-i="cart"></span> (<span id="cnt">0</span>)</button></div></header>
 <section id="shop">
-<div class="hero"><h1>Le stère de bois livré partout en Europe</h1><p>Bois de chauffage sec, en gros ou en petite quantité. Commandez en ligne, payez en sécurité, on livre à votre porte.</p>
-<div class="badges"><span>🚚 Expédié depuis la France, livré chez vous</span><span>🔥 Bois sec</span><span>🌍 Toute l’Europe</span><span>🔒 Paiement sécurisé</span></div></div>
+<div class="hero"><h1 data-i="h1"></h1><p data-i="hp"></p>
+<div class="badges"><span data-i="b1"></span><span data-i="b2"></span><span data-i="b3"></span></div></div>
 <main>
-<h2>Nos stères</h2>
-<div class="filters"><select id="fe" onchange="renderP()"><option value="">Toutes essences</option><option>Chêne</option><option>Hêtre</option><option>Charme</option><option>Bouleau</option><option>Mélange</option></select>
-<select id="fl" onchange="renderP()"><option value="">Toutes longueurs</option><option>25 cm</option><option>33 cm</option><option>50 cm</option></select></div>
+<h2 data-i="nos"></h2>
+<div class="filters"><select id="fe" onchange="renderP()"></select><select id="fl" onchange="renderP()"></select></div>
 <div class="grid" id="prods"></div>
-<h2>Notre stock</h2>
-<div class="gal" id="gal"></div>
+<h2 data-i="stk"></h2><div class="gal" id="gal"></div>
+<div id="rv" class="hide"><h2 data-i="rev"></h2><div id="rvl"></div></div>
+<h2 data-i="faq"></h2>
+<details><summary data-i="q1"></summary><p data-i="a1"></p></details>
+<details><summary data-i="q2"></summary><p data-i="a2"></p></details>
 </main>
 </section>
-
 <section id="cart" class="hide"><main>
-<div class="steps"><div class="on" id="s1">1. Panier</div><div id="s2">2. Livraison</div><div id="s3">3. Paiement</div></div>
-
-<div id="v1">
-<h2>Votre panier</h2><div class="panel" id="cartlist"></div>
-<button class="btn sec" onclick="show('shop')" style="margin-bottom:8px">← Continuer mes achats</button>
-<button class="btn" onclick="go(2)">Passer à la livraison</button>
-</div>
-
-<div id="v2" class="hide">
-<h2>Adresse de livraison</h2>
-<div class="panel">
-<div class="two"><div><label>Prénom</label><input id="fn"></div><div><label>Nom</label><input id="ln"></div></div>
-<label>E-mail</label><input id="em" type="email"><label>Téléphone</label><input id="ph" type="tel">
-<label>Pays</label><select id="co" onchange="renderT()"></select>
-<label>Adresse (rue, numéro)</label><input id="ad">
-<div class="two"><div><label>Code postal</label><input id="zp"></div><div><label>Ville</label><input id="ci"></div></div>
-<label>Instructions pour le livreur (facultatif)</label><input id="nt" placeholder="Accès camion, point de dépôt…">
-</div>
-<button class="btn sec" onclick="go(1)" style="margin-bottom:8px">← Retour</button>
-<button class="btn" onclick="go(3)">Continuer vers le paiement</button>
-</div>
-
-<div id="v3" class="hide">
-<h2>Paiement</h2>
+<div class="steps"><div class="on" id="s1" data-i="c1"></div><div id="s2" data-i="c2"></div><div id="s3" data-i="c3"></div></div>
+<div id="v1"><h2 data-i="cart"></h2><div class="panel" id="cartlist"></div>
+<button class="btn sec" onclick="show('shop')" style="margin-bottom:8px" data-i="bk"></button>
+<button class="btn" onclick="go(2)" data-i="go2"></button></div>
+<div id="v2" class="hide"><h2 data-i="sh"></h2><div class="panel">
+<div class="two"><div><label data-i="fn"></label><input id="fn"></div><div><label data-i="ln"></label><input id="ln"></div></div>
+<label data-i="em"></label><input id="em" type="email"><label data-i="ph"></label><input id="ph" type="tel">
+<label data-i="co"></label><select id="co"></select>
+<label data-i="ad"></label><input id="ad">
+<div class="two"><div><label data-i="zp"></label><input id="zp"></div><div><label data-i="ci"></label><input id="ci"></div></div>
+<label data-i="nt"></label><input id="nt"></div>
+<button class="btn sec" onclick="go(1)" style="margin-bottom:8px" data-i="bk"></button>
+<button class="btn" onclick="go(3)" data-i="go3"></button></div>
+<div id="v3" class="hide"><h2 data-i="py"></h2>
 <div class="panel"><div class="pay">
-<label><input type="radio" name="pm" value="card" checked onchange="pm()"><span>💳 Carte</span></label>
-<label><input type="radio" name="pm" value="vir" onchange="pm()"><span>🏦 Virement</span></label>
+<label><input type="radio" name="pm" value="card" checked onchange="pm()"><span>💳 Visa / MC</span></label>
+<label><input type="radio" name="pm" value="vir" onchange="pm()"><span>🏦 SEPA</span></label>
 <label><input type="radio" name="pm" value="pp" onchange="pm()"><span>🅿️ PayPal</span></label></div>
 <p id="pother" class="mut"></p></div>
-<div class="panel"><h3 style="margin:0 0 6px">Récapitulatif</h3><div id="recap"></div></div>
-<button class="btn sec" onclick="go(2)" style="margin-bottom:8px">← Retour</button>
-<button class="btn" onclick="pay()">Confirmer la commande</button>
-</div>
-
-<div id="v4" class="hide"><div class="panel" style="text-align:center">
-<div class="ok">✔ Commande confirmée</div><p id="conf"></p>
-<button class="btn" onclick="show('shop')">Retour à la boutique</button></div></div>
+<div class="panel"><h3 style="margin:0 0 6px" data-i="rc"></h3><div id="recap"></div></div>
+<button class="btn sec" onclick="go(2)" style="margin-bottom:8px" data-i="bk"></button>
+<button class="btn" onclick="pay()" data-i="cf"></button></div>
+<div id="v4" class="hide"><div class="panel" style="text-align:center"><div class="ok" data-i="ok"></div><p id="conf"></p>
+<button class="btn" onclick="show('shop')" data-i="bs"></button></div></div>
 </main></section>
-
+<a id="wa" class="hide" target="_blank" rel="noopener">💬</a>
 <form name="orders" method="POST" data-netlify="true" netlify-honeypot="bot" hidden><input name="bot"><input name="numero"><input name="client"><input name="email"><input name="telephone"><input name="adresse"><input name="pays"><input name="instructions"><input name="articles"><input name="total"><input name="paiement"></form>
-<footer>© EuroStere – Vente de stères de bois de chauffage · Expédié depuis la France · Livraison en Europe</footer>
-
+<footer>© EuroStere · <a href="legal.html" data-i="leg"></a></footer>
 <script>
+var WA="",R=[];
+var D={
+fr:{h1:"Le stère de bois livré partout en Europe",hp:"Bois de chauffage en gros ou en petite quantité. Commandez en ligne, on livre à votre porte.",b1:"🚚 Expédié depuis la France",b2:"🌍 Toute l’Europe",b3:"🏷️ Remises dès 5 stères",nos:"Nos stères",ae:"Toutes essences",al:"Toutes longueurs",stk:"Notre stock",ps:"/ stère",add:"Ajouter",cart:"Panier",c1:"1. Panier",c2:"2. Livraison",c3:"3. Paiement",go2:"Passer à la livraison",emp:"Votre panier est vide.",sub:"Sous-total",dis:"Remise quantité",sh:"Adresse de livraison",fn:"Prénom",ln:"Nom",em:"E-mail",ph:"Téléphone",co:"Pays",ad:"Adresse (rue, numéro)",zp:"Code postal",ci:"Ville",nt:"Instructions pour le livreur (facultatif)",bk:"← Retour",go3:"Continuer vers le paiement",py:"Paiement",m1:"Un lien de paiement sécurisé par carte vous sera envoyé par e-mail après validation de la commande.",m2:"Les coordonnées bancaires vous seront envoyées par e-mail. La commande est expédiée dès réception du virement.",m3:"Un lien de paiement PayPal vous sera envoyé par e-mail après validation de la commande.",rc:"Récapitulatif",gd:"Marchandise",dl:"Livraison",tot:"Total TTC",cf:"Confirmer la commande",sd:"Envoi…",ok:"✔ Commande confirmée",ok2:"Merci ! Les instructions de paiement vous seront envoyées par e-mail.",ord:"Commande",bs:"Retour à la boutique",e2:"Vérifiez l’adresse et l’e-mail.",e4:"La commande n’a pas pu être envoyée. Réessayez.",faq:"Questions fréquentes",q1:"Qu’est-ce qu’un stère ?",a1:"Environ 1 m³ de bûches empilées. Le volume réel livré varie selon la longueur des bûches.",q2:"Comment payer et quand suis-je livré ?",a2:"Après votre commande, vous recevez par e-mail les instructions de paiement et le délai de livraison.",leg:"CGV et mentions légales",rev:"Avis clients",pal:"palette",lg:"bûches",ste:"Stère"},
+en:{h1:"Firewood by the stère, delivered across Europe",hp:"Firewood in bulk or small quantities. Order online and we deliver to your door.",b1:"🚚 Shipped from France",b2:"🌍 All of Europe",b3:"🏷️ Discounts from 5 stères",nos:"Our firewood",ae:"All species",al:"All lengths",stk:"Our stock",ps:"/ stère",add:"Add",cart:"Cart",c1:"1. Cart",c2:"2. Delivery",c3:"3. Payment",go2:"Go to delivery",emp:"Your cart is empty.",sub:"Subtotal",dis:"Quantity discount",sh:"Delivery address",fn:"First name",ln:"Last name",em:"Email",ph:"Phone",co:"Country",ad:"Address (street, number)",zp:"Postcode",ci:"City",nt:"Notes for the driver (optional)",bk:"← Back",go3:"Continue to payment",py:"Payment",m1:"A secure card payment link will be emailed to you once your order is validated.",m2:"Bank details will be emailed to you. The order ships once the transfer is received.",m3:"A PayPal payment link will be emailed to you once your order is validated.",rc:"Summary",gd:"Goods",dl:"Delivery",tot:"Total incl. VAT",cf:"Confirm order",sd:"Sending…",ok:"✔ Order confirmed",ok2:"Thank you! Payment instructions will be emailed to you.",ord:"Order",bs:"Back to shop",e2:"Please check your address and email.",e4:"Your order could not be sent. Please try again.",faq:"FAQ",q1:"What is a stère?",a1:"About 1 m³ of stacked logs. The actual delivered volume depends on log length.",q2:"How do I pay and when is delivery?",a2:"After ordering, you receive payment instructions and the delivery time by email.",leg:"Terms and legal notice",rev:"Customer reviews",pal:"pallet",lg:"logs",ste:"Stère"},
+de:{h1:"Brennholz im Ster, geliefert in ganz Europa",hp:"Brennholz in großen oder kleinen Mengen. Online bestellen, wir liefern bis zu Ihrer Tür.",b1:"🚚 Versand aus Frankreich",b2:"🌍 Ganz Europa",b3:"🏷️ Rabatte ab 5 Ster",nos:"Unser Brennholz",ae:"Alle Holzarten",al:"Alle Längen",stk:"Unser Lager",ps:"/ Ster",add:"Hinzufügen",cart:"Warenkorb",c1:"1. Warenkorb",c2:"2. Lieferung",c3:"3. Zahlung",go2:"Weiter zur Lieferung",emp:"Ihr Warenkorb ist leer.",sub:"Zwischensumme",dis:"Mengenrabatt",sh:"Lieferadresse",fn:"Vorname",ln:"Nachname",em:"E-Mail",ph:"Telefon",co:"Land",ad:"Adresse (Straße, Nummer)",zp:"PLZ",ci:"Ort",nt:"Hinweise für den Fahrer (optional)",bk:"← Zurück",go3:"Weiter zur Zahlung",py:"Zahlung",m1:"Nach Bestätigung Ihrer Bestellung erhalten Sie per E-Mail einen sicheren Zahlungslink für die Kartenzahlung.",m2:"Die Bankverbindung senden wir Ihnen per E-Mail. Der Versand erfolgt nach Zahlungseingang.",m3:"Nach Bestätigung Ihrer Bestellung erhalten Sie per E-Mail einen PayPal-Zahlungslink.",rc:"Zusammenfassung",gd:"Ware",dl:"Lieferung",tot:"Gesamt inkl. MwSt.",cf:"Bestellung bestätigen",sd:"Senden…",ok:"✔ Bestellung bestätigt",ok2:"Danke! Die Zahlungsanweisungen erhalten Sie per E-Mail.",ord:"Bestellung",bs:"Zurück zum Shop",e2:"Bitte Adresse und E-Mail prüfen.",e4:"Die Bestellung konnte nicht gesendet werden. Bitte erneut versuchen.",faq:"Häufige Fragen",q1:"Was ist ein Ster?",a1:"Etwa 1 m³ geschichtetes Holz. Das tatsächlich gelieferte Volumen hängt von der Scheitlänge ab.",q2:"Wie zahle ich und wann wird geliefert?",a2:"Nach der Bestellung erhalten Sie die Zahlungsanweisungen und die Lieferzeit per E-Mail.",leg:"AGB und Impressum",rev:"Kundenbewertungen",pal:"Palette",lg:"Scheite",ste:"Ster"},
+it:{h1:"Legna da ardere a stero, consegnata in tutta Europa",hp:"Legna da ardere in grandi o piccole quantità. Ordina online e consegniamo a casa tua.",b1:"🚚 Spedito dalla Francia",b2:"🌍 Tutta Europa",b3:"🏷️ Sconti da 5 steri",nos:"La nostra legna",ae:"Tutte le essenze",al:"Tutte le lunghezze",stk:"Il nostro magazzino",ps:"/ stero",add:"Aggiungi",cart:"Carrello",c1:"1. Carrello",c2:"2. Consegna",c3:"3. Pagamento",go2:"Vai alla consegna",emp:"Il carrello è vuoto.",sub:"Subtotale",dis:"Sconto quantità",sh:"Indirizzo di consegna",fn:"Nome",ln:"Cognome",em:"E-mail",ph:"Telefono",co:"Paese",ad:"Indirizzo (via, numero)",zp:"CAP",ci:"Città",nt:"Istruzioni per il corriere (facoltativo)",bk:"← Indietro",go3:"Continua al pagamento",py:"Pagamento",m1:"Dopo la convalida dell’ordine riceverai via e-mail un link sicuro per pagare con carta.",m2:"Riceverai via e-mail le coordinate bancarie. L’ordine viene spedito alla ricezione del bonifico.",m3:"Dopo la convalida dell’ordine riceverai via e-mail un link di pagamento PayPal.",rc:"Riepilogo",gd:"Merce",dl:"Consegna",tot:"Totale IVA incl.",cf:"Conferma l’ordine",sd:"Invio…",ok:"✔ Ordine confermato",ok2:"Grazie! Riceverai le istruzioni di pagamento via e-mail.",ord:"Ordine",bs:"Torna al negozio",e2:"Controlla indirizzo ed e-mail.",e4:"Impossibile inviare l’ordine. Riprova.",faq:"Domande frequenti",q1:"Che cos’è uno stero?",a1:"Circa 1 m³ di legna accatastata. Il volume effettivo consegnato dipende dalla lunghezza dei ciocchi.",q2:"Come pago e quando ricevo la merce?",a2:"Dopo l’ordine ricevi via e-mail le istruzioni di pagamento e i tempi di consegna.",leg:"Condizioni e note legali",rev:"Recensioni dei clienti",pal:"pallet",lg:"ciocchi",ste:"Stero"},
+es:{h1:"Leña por estéreo, entregada en toda Europa",hp:"Leña al por mayor o en pequeñas cantidades. Pide en línea y la entregamos en tu puerta.",b1:"🚚 Enviado desde Francia",b2:"🌍 Toda Europa",b3:"🏷️ Descuentos desde 5 estéreos",nos:"Nuestra leña",ae:"Todas las especies",al:"Todas las longitudes",stk:"Nuestro almacén",ps:"/ estéreo",add:"Añadir",cart:"Carrito",c1:"1. Carrito",c2:"2. Entrega",c3:"3. Pago",go2:"Ir a la entrega",emp:"Tu carrito está vacío.",sub:"Subtotal",dis:"Descuento por cantidad",sh:"Dirección de entrega",fn:"Nombre",ln:"Apellidos",em:"Correo electrónico",ph:"Teléfono",co:"País",ad:"Dirección (calle, número)",zp:"Código postal",ci:"Ciudad",nt:"Indicaciones para el repartidor (opcional)",bk:"← Volver",go3:"Continuar al pago",py:"Pago",m1:"Tras validar el pedido recibirás por correo un enlace seguro para pagar con tarjeta.",m2:"Te enviaremos los datos bancarios por correo. El pedido se envía al recibir la transferencia.",m3:"Tras validar el pedido recibirás por correo un enlace de pago de PayPal.",rc:"Resumen",gd:"Mercancía",dl:"Entrega",tot:"Total IVA incl.",cf:"Confirmar el pedido",sd:"Enviando…",ok:"✔ Pedido confirmado",ok2:"¡Gracias! Recibirás las instrucciones de pago por correo.",ord:"Pedido",bs:"Volver a la tienda",e2:"Revisa la dirección y el correo.",e4:"No se pudo enviar el pedido. Inténtalo de nuevo.",faq:"Preguntas frecuentes",q1:"¿Qué es un estéreo?",a1:"Aproximadamente 1 m³ de leña apilada. El volumen real entregado depende de la longitud de los troncos.",q2:"¿Cómo pago y cuándo recibo el pedido?",a2:"Tras el pedido recibes por correo las instrucciones de pago y el plazo de entrega.",leg:"Condiciones y aviso legal",rev:"Opiniones de clientes",pal:"palé",lg:"troncos",ste:"Estéreo"},
+nl:{h1:"Brandhout per stère, geleverd in heel Europa",hp:"Brandhout in grote of kleine hoeveelheden. Bestel online, wij leveren aan huis.",b1:"🚚 Verzonden vanuit Frankrijk",b2:"🌍 Heel Europa",b3:"🏷️ Korting vanaf 5 stère",nos:"Ons brandhout",ae:"Alle houtsoorten",al:"Alle lengtes",stk:"Onze voorraad",ps:"/ stère",add:"Toevoegen",cart:"Winkelwagen",c1:"1. Winkelwagen",c2:"2. Levering",c3:"3. Betaling",go2:"Naar levering",emp:"Je winkelwagen is leeg.",sub:"Subtotaal",dis:"Hoeveelheidskorting",sh:"Afleveradres",fn:"Voornaam",ln:"Achternaam",em:"E-mail",ph:"Telefoon",co:"Land",ad:"Adres (straat, nummer)",zp:"Postcode",ci:"Plaats",nt:"Opmerkingen voor de bezorger (optioneel)",bk:"← Terug",go3:"Verder naar betaling",py:"Betaling",m1:"Na bevestiging van je bestelling ontvang je per e-mail een veilige betaallink voor kaartbetaling.",m2:"Je ontvangt de bankgegevens per e-mail. De bestelling wordt verzonden na ontvangst van de overschrijving.",m3:"Na bevestiging van je bestelling ontvang je per e-mail een PayPal-betaallink.",rc:"Overzicht",gd:"Goederen",dl:"Levering",tot:"Totaal incl. btw",cf:"Bestelling bevestigen",sd:"Verzenden…",ok:"✔ Bestelling bevestigd",ok2:"Bedankt! Je ontvangt de betaalinstructies per e-mail.",ord:"Bestelling",bs:"Terug naar de winkel",e2:"Controleer adres en e-mail.",e4:"De bestelling kon niet worden verzonden. Probeer opnieuw.",faq:"Veelgestelde vragen",q1:"Wat is een stère?",a1:"Ongeveer 1 m³ gestapeld hout. Het werkelijk geleverde volume hangt af van de houtlengte.",q2:"Hoe betaal ik en wanneer wordt er geleverd?",a2:"Na je bestelling ontvang je per e-mail de betaalinstructies en de levertijd.",leg:"Voorwaarden en juridische info",rev:"Klantbeoordelingen",pal:"pallet",lg:"blokken",ste:"Stère"}};
+var E={fr:["Chêne","Hêtre","Charme","Bouleau","Mélange feuillus"],en:["Oak","Beech","Hornbeam","Birch","Mixed hardwood"],de:["Eiche","Buche","Hainbuche","Birke","Laubholz-Mix"],it:["Rovere","Faggio","Carpino","Betulla","Misto latifoglie"],es:["Roble","Haya","Carpe","Abedul","Mezcla de frondosas"],nl:["Eik","Beuk","Haagbeuk","Berk","Gemengd loofhout"]};
+var EK=["Chêne","Hêtre","Charme","Bouleau","Mélange"];
 var P=[
-{id:1,n:"Stère de chêne",e:"Chêne",l:"50 cm",p:88,img:"chene-50.jpg",d:"Long feu, très calorifique"},
-{id:2,n:"Stère de hêtre",e:"Hêtre",l:"33 cm",p:98,img:"hetre-33.jpg",d:"Flamme régulière, idéal poêle"},
-{id:3,n:"Stère de charme",e:"Charme",l:"50 cm",p:95,img:"charme-50.jpg",d:"Excellent pouvoir chauffant"},
-{id:4,n:"Stère de bouleau",e:"Bouleau",l:"25 cm",p:85,img:"bouleau-25.jpg",d:"Allumage facile, flambée vive"},
-{id:5,n:"Stère mélange feuillus",e:"Mélange",l:"33 cm",p:80,img:"melange-33.jpg",d:"Bon rapport qualité/prix"},
-{id:6,n:"Stère de chêne bûches courtes",e:"Chêne",l:"25 cm",p:115,img:"chene-25.jpg",d:"Parfait pour insert et cheminée"},
-{id:7,n:"Stère de chêne sur palette",e:"Chêne",l:"33 cm",p:135,img:"palette.jpg",d:"Livré sur palette, facile à stocker"}];
+{id:1,e:"Chêne",l:"50 cm",p:88,img:"chene-50.jpg"},
+{id:2,e:"Hêtre",l:"33 cm",p:98,img:"hetre-33.jpg"},
+{id:3,e:"Charme",l:"50 cm",p:95,img:"charme-50.jpg"},
+{id:4,e:"Bouleau",l:"25 cm",p:85,img:"bouleau-25.jpg"},
+{id:5,e:"Mélange",l:"33 cm",p:80,img:"melange-33.jpg"},
+{id:6,e:"Chêne",l:"25 cm",p:115,img:"chene-25.jpg"},
+{id:7,e:"Chêne",l:"33 cm",p:135,img:"palette.jpg",pal:1}];
 var G=["stock-1.jpg","stock-2.jpg","stock-3.jpg","stock-4.jpg","stock-5.jpg","stock-6.jpg"];
 var C={FR:["France",45],BE:["Belgique",60],LU:["Luxembourg",60],NL:["Pays-Bas",65],DE:["Allemagne",70],IT:["Italie",80],ES:["Espagne",90],AT:["Autriche",95],PT:["Portugal",110],CH:["Suisse",110],PL:["Pologne",100],CZ:["Tchéquie",100],SK:["Slovaquie",110],SI:["Slovénie",110],HU:["Hongrie",115],HR:["Croatie",120],DK:["Danemark",120],RO:["Roumanie",130],BG:["Bulgarie",140],GB:["Royaume-Uni",140],SE:["Suède",140],LT:["Lituanie",140],IE:["Irlande",150],GR:["Grèce",150],LV:["Lettonie",150],EE:["Estonie",150],FI:["Finlande",160],NO:["Norvège",160],MT:["Malte",200],CY:["Chypre",220]};
-var cart={};
+var cart={},L="fr";
+try{L=localStorage.getItem("lang")||(navigator.language||"fr").slice(0,2)}catch(e){L=(navigator.language||"fr").slice(0,2)}
+if(!D[L])L="fr";
 function $(i){return document.getElementById(i)}
+function t(k){return D[L][k]||D.fr[k]}
 function eur(x){return x.toFixed(2).replace(".",",")+" €"}
+function esc(s){var d=document.createElement("div");d.textContent=s||"";return d.innerHTML}
+function pr(k){return P.filter(function(x){return x.id==k})[0]}
+function nm(x){return E[L][EK.indexOf(x.e)]+" – "+t("ste")+(x.pal?" ("+t("pal")+")":"")}
+function cn(c){try{return new Intl.DisplayNames([L],{type:"region"}).of(c)}catch(e){return C[c][0]}}
+function qty(){var n=0;for(var k in cart)n+=cart[k];return n}
+function sub(){var s=0;for(var k in cart)s+=pr(k).p*cart[k];return s}
+function rate(){var n=qty();return n>=20?.12:n>=10?.08:n>=5?.05:0}
+function dsc(){return sub()*rate()}
+function ship(){var c=$("co").value;return qty()?C[c][1]+Math.max(0,qty()-1)*8:0}
+function upd(){$("cnt").textContent=qty()}
+function sl(v){L=v;try{localStorage.setItem("lang",L)}catch(e){}ap()}
+function fo(){var a=$("fe").value,l=$("fl").value,h='<option value="">'+t("ae")+'</option>';
+EK.forEach(function(k,i){h+='<option value="'+k+'">'+E[L][i]+'</option>'});$("fe").innerHTML=h;$("fe").value=a;
+$("fl").innerHTML='<option value="">'+t("al")+'</option><option>25 cm</option><option>33 cm</option><option>50 cm</option>';$("fl").value=l}
+function fc(){var s=$("co"),v=s.value||"FR",h="";for(var k in C)h+='<option value="'+k+'">'+cn(k)+'</option>';s.innerHTML=h;s.value=v}
 function renderP(){var e=$("fe").value,l=$("fl").value,h="";
 P.filter(function(x){return(!e||x.e==e)&&(!l||x.l==l)}).forEach(function(x){
-h+='<div class="card"><img src="images/'+x.img+'" alt="'+x.n+'" loading="lazy" style="width:100%;height:170px;object-fit:cover;display:block"><div class="cb"><h3>'+x.n+'</h3><div class="mut">'+x.d+' · bûches '+x.l+'</div><div class="price">'+eur(x.p)+' <small>/ stère</small></div><div class="row"><input type="number" min="1" value="1" id="q'+x.id+'"><button class="btn" onclick="add('+x.id+')">Ajouter</button></div></div></div>'});
-$("prods").innerHTML=h||'<p class="mut">Aucun produit pour ce filtre.</p>'}
+h+='<div class="card"><img src="images/'+x.img+'" alt="'+nm(x)+'" loading="lazy" style="width:100%;height:170px;object-fit:cover;display:block"><div class="cb"><h3>'+nm(x)+'</h3><div class="mut">'+t("lg")+' '+x.l+'</div><div class="price">'+eur(x.p)+' <small>'+t("ps")+'</small></div><div class="row"><input type="number" min="1" value="1" id="q'+x.id+'"><button class="btn" onclick="add('+x.id+')">'+t("add")+'</button></div></div></div>'});
+$("prods").innerHTML=h}
 function add(id){var q=parseInt($("q"+id).value)||1;cart[id]=(cart[id]||0)+q;upd();$("q"+id).value=1;show("cart")}
-function upd(){var n=0;for(var k in cart)n+=cart[k];$("cnt").textContent=n}
-function sub(){var s=0;for(var k in cart){s+=P.filter(function(x){return x.id==k})[0].p*cart[k]}return s}
-function qty(){var n=0;for(var k in cart)n+=cart[k];return n}
-function ship(){var c=$("co").value;return qty()?C[c][1]+Math.max(0,qty()-1)*8:0}
-function renderT(){}
-function renderCart(){var h="",k;for(k in cart){var x=P.filter(function(y){return y.id==k})[0];
-h+='<div class="line"><span>'+x.n+' × '+cart[k]+'</span><span>'+eur(x.p*cart[k])+' <button class="rm" onclick="del('+k+')">×</button></span></div>'}
-if(!h){$("cartlist").innerHTML='<p class="mut">Votre panier est vide.</p>';return}
-h+='<div class="line tot"><span>Sous-total</span><span>'+eur(sub())+'</span></div><p class="mut">Frais de livraison calculés selon votre pays à l’étape suivante.</p>';
-$("cartlist").innerHTML=h}
+function tl(sh){var s=sub(),d=dsc(),h='<div class="line"><span>'+t("gd")+' ('+qty()+')</span><span>'+eur(s)+'</span></div>';
+if(d)h+='<div class="line"><span>'+t("dis")+' (−'+Math.round(rate()*100)+' %)</span><span>−'+eur(d)+'</span></div>';
+if(sh)h+='<div class="line"><span>'+t("dl")+' '+cn($("co").value)+'</span><span>'+eur(ship())+'</span></div>';
+return h+'<div class="line tot"><span>'+(sh?t("tot"):t("sub"))+'</span><span>'+eur(s-d+(sh?ship():0))+'</span></div>'}
+function renderCart(){var h="",k;for(k in cart){var x=pr(k);
+h+='<div class="line"><span>'+nm(x)+' × '+cart[k]+'</span><span>'+eur(x.p*cart[k])+' <button class="rm" onclick="del('+k+')">×</button></span></div>'}
+$("cartlist").innerHTML=h?h+tl(0):'<p class="mut">'+t("emp")+'</p>'}
 function del(k){delete cart[k];upd();renderCart()}
-function show(s){$("shop").classList.toggle("hide",s!="shop");$("cart").classList.toggle("hide",s!="cart");
-if(s=="cart"){go(1)}window.scrollTo(0,0)}
-function go(n){if(n>1&&!qty()){alert("Votre panier est vide.");return}
-if(n==3){var r=["fn","ln","em","ph","ad","zp","ci"];for(var i=0;i<r.length;i++){if(!$(r[i]).value.trim()){alert("Merci de remplir tous les champs d’adresse.");return}}
-if($("em").value.indexOf("@")<1){alert("E-mail invalide.");return}recap()}
-for(var j=1;j<=4;j++){$("v"+j).classList.toggle("hide",j!=n)}
-for(var j=1;j<=3;j++){$("s"+j).classList.toggle("on",j<=Math.min(n,3))}
+function show(s){$("shop").classList.toggle("hide",s!="shop");$("cart").classList.toggle("hide",s!="cart");if(s=="cart")go(1);window.scrollTo(0,0)}
+function go(n){if(n>1&&!qty()){alert(t("emp"));return}
+if(n==3){var r=["fn","ln","em","ph","ad","zp","ci"];for(var i=0;i<r.length;i++){if(!$(r[i]).value.trim()){alert(t("e2"));return}}
+if($("em").value.indexOf("@")<1){alert(t("e2"));return}recap()}
+for(var j=1;j<=4;j++)$("v"+j).classList.toggle("hide",j!=n);
+for(var j=1;j<=3;j++)$("s"+j).classList.toggle("on",j<=Math.min(n,3));
 if(n==1)renderCart();window.scrollTo(0,0)}
-function recap(){var c=$("co").value,s=sub(),f=ship();
-$("recap").innerHTML='<div class="line"><span>Marchandise ('+qty()+' stère'+(qty()>1?'s':'')+')</span><span>'+eur(s)+'</span></div><div class="line"><span>Livraison '+C[c][0]+'</span><span>'+eur(f)+'</span></div><div class="line tot"><span>Total TTC</span><span>'+eur(s+f)+'</span></div><p class="mut">Livraison à : '+$("ad").value+', '+$("zp").value+' '+$("ci").value+', '+C[c][0]+'</p>'}
-function pm(){var v=document.querySelector('input[name=pm]:checked').value;
-$("pother").textContent=v=="card"?"Un lien de paiement sécurisé par carte vous sera envoyé par e-mail après validation de la commande.":v=="vir"?"Les coordonnées bancaires vous seront envoyées par e-mail. La commande est expédiée dès réception du virement.":"Un lien de paiement PayPal vous sera envoyé par e-mail après validation de la commande."}
-function pay(){var no="SP-"+Date.now().toString().slice(-7),c=$("co").value,t=sub()+ship(),k,l=[];
-for(k in cart){var x=P.filter(function(y){return y.id==k})[0];l.push(cart[k]+" x "+x.n+" ("+x.l+") = "+eur(x.p*cart[k]))}
-var f={"form-name":"orders",numero:no,client:$("fn").value+" "+$("ln").value,email:$("em").value,telephone:$("ph").value,adresse:$("ad").value+", "+$("zp").value+" "+$("ci").value,pays:C[c][0],instructions:$("nt").value,articles:l.join(" | "),total:eur(t),paiement:{card:"Carte",vir:"Virement",pp:"PayPal"}[document.querySelector('input[name=pm]:checked').value]};
+function recap(){$("recap").innerHTML=tl(1)+'<p class="mut">'+esc($("ad").value)+', '+esc($("zp").value)+' '+esc($("ci").value)+', '+cn($("co").value)+'</p>'}
+function pm(){var v=document.querySelector("input[name=pm]:checked").value;$("pother").textContent=t(v=="card"?"m1":v=="vir"?"m2":"m3")}
+function pay(){var no="SP-"+Date.now().toString().slice(-7),c=$("co").value,t2=sub()-dsc()+ship(),k,l=[];
+for(k in cart){var x=pr(k);l.push(cart[k]+" x "+E.fr[EK.indexOf(x.e)]+" "+x.l+(x.pal?" palette":"")+" = "+eur(x.p*cart[k]))}
+if(dsc())l.push("Remise -"+Math.round(rate()*100)+"% = -"+eur(dsc()));
+var f={"form-name":"orders",numero:no,client:$("fn").value+" "+$("ln").value,email:$("em").value,telephone:$("ph").value,adresse:$("ad").value+", "+$("zp").value+" "+$("ci").value,pays:C[c][0],instructions:"["+L.toUpperCase()+"] "+$("nt").value,articles:l.join(" | "),total:eur(t2),paiement:{card:"Carte",vir:"Virement",pp:"PayPal"}[document.querySelector("input[name=pm]:checked").value]};
 var body=Object.keys(f).map(function(q){return encodeURIComponent(q)+"="+encodeURIComponent(f[q])}).join("&");
-var b=document.querySelector("#v3 .btn:not(.sec)");b.disabled=true;b.textContent="Envoi…";
+var b=document.querySelector("#v3 .btn:not(.sec)");b.disabled=true;b.textContent=t("sd");
 fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body}).then(function(r){if(!r.ok)throw 0;
-$("conf").innerHTML="Merci "+f.client+" !<br>Commande <b>"+no+"</b> · Total <b>"+f.total+"</b><br>Livraison à : "+f.adresse+", "+f.pays+"<br>Les instructions de paiement vous seront envoyées à "+f.email+".";cart={};upd();go(4);b.disabled=false;b.textContent="Confirmer la commande"}).catch(function(){b.disabled=false;b.textContent="Confirmer la commande";alert("La commande n’a pas pu être envoyée. Vérifiez votre connexion et réessayez.")})}
-(function(){var s=$("co"),h="";for(var k in C)h+='<option value="'+k+'">'+C[k][0]+'</option>';s.innerHTML=h})();
-$("gal").innerHTML=G.map(function(g){return '<img src="images/'+g+'" alt="Stock de bois de chauffage" loading="lazy">'}).join("");
-renderP();pm();
+$("conf").innerHTML=t("ord")+" <b>"+no+"</b> · "+eur(t2)+"<br>"+t("ok2");cart={};upd();go(4);b.disabled=false;b.textContent=t("cf")}).catch(function(){b.disabled=false;b.textContent=t("cf");alert(t("e4"))})}
+function ap(){document.documentElement.lang=L;[].forEach.call(document.querySelectorAll("[data-i]"),function(e){e.textContent=t(e.getAttribute("data-i"))});
+$("lg").value=L;fo();fc();renderP();pm();
+if(!$("v1").classList.contains("hide"))renderCart();if(!$("v3").classList.contains("hide"))recap()}
+ap();
+$("gal").innerHTML=G.map(function(g){return '<img src="images/'+g+'" alt="" loading="lazy">'}).join("");
+if(R.length){$("rv").classList.remove("hide");$("rvl").innerHTML=R.map(function(r){return '<div class="panel"><b>'+esc(r.n)+'</b> <span class="mut">'+esc(r.p)+'</span><p>'+esc(r.t)+'</p></div>'}).join("")}
+if(WA){$("wa").href="https://wa.me/"+WA.replace(/\D/g,"");$("wa").classList.remove("hide")}
 </script>
 </body>
 </html>
